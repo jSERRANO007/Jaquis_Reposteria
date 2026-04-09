@@ -1,21 +1,35 @@
-{% extends 'base.html' %}
-{% block content %}
-<h2 class="section-title">Pantalla operativa</h2>
-<section class="kitchen-grid">
-{% for o in orders %}
-  <article class="ticket status-{{ o['status']|lower|replace(' ', '-') }}">
-    <h3>Pedido #{{ o['id'] }}</h3>
-    <p><strong>{{ o['customer_name'] }}</strong> · {{ o['phone'] }}</p>
-    <p>{{ o['product_name'] }} x {{ o['quantity'] }}</p>
-    <p>Entrega: {{ o['delivery_date'] }} {{ o['delivery_time'] }}</p>
-    <p>Total: ₡{{ o['total']|int }}</p>
-    <p>Estado: {{ o['status'] }}</p>
-    <div class="ticket-actions">
-      <form method="post" action="/estado/{{ o['id'] }}/En preparación"><button>En preparación</button></form>
-      <form method="post" action="/estado/{{ o['id'] }}/Listo"><button>Listo</button></form>
-      <form method="post" action="/estado/{{ o['id'] }}/Entregado"><button>Entregado</button></form>
-    </div>
-  </article>
-{% endfor %}
-</section>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pantalla Cocina — JAQUIS</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">🍰 JAQUIS — Pantalla Operativa</div>
+    <nav>
+      <a href="/cocina">Cocina</a>
+      <a href="/reportes">Reportes</a>
+      <a href="/catalogo">Catálogo</a>
+      <a href="/logout" class="btn-logout">Salir</a>
+    </nav>
+  </header>
+  <main>
+    <h2 class="section-title">Pedidos activos</h2>
+    <section class="kitchen-grid">
+    {% for o in orders %}
+      <article class="ticket status-{{ o['status']|lower|replace(' ', '-') }}">
+        <div class="ticket-header">
+          <span class="ticket-id">Pedido #{{ o['id'] }}</span>
+          <span class="ticket-status">{{ o['status'] }}</span>
+        </div>
+        <p><strong>{{ o['customer_name'] }}</strong> · {{ o['phone'] }}</p>
+        <p>🛍️ {{ o['product_name'] }} x {{ o['quantity'] }}</p>
+        <p>📅 Entrega: {{ o['delivery_date'] }} {{ o['delivery_time'] }}</p>
+        <p>💳 Total: ₡{{ o['total']|int }}</p>
+        {% if o['notes'] %}<p>📝 {{ o['notes'] }}</p>{% endif %}
+        <div class="ticket-actions">
+          <form method="post" action="/estado/{{ o['id'] }}/En preparación"><button class="btn-estado prep">En preparación</button></form>
+          <form method="post" action="/estado/{
