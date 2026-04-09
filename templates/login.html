@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acceso Empresa — JAQUIS</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+  <div class="login-wrap">
+    <div class="login-box">
+      <div class="login-logo">🍰</div>
+      <h2>JAQUIS Repostería Gourmet</h2>
+      <p class="login-sub">Área interna de empresa</p>
+      {% if error %}
+      <div class="alert-error">Usuario o contraseña incorrectos. Intente de nuevo.</div>
+      {% endif %}
+      <form method="post" action="/login" class="login-form">
+        <div class="field">
+          <label>Usuario</label>
+          <input type="text" name="username" placeholder="usuario" required autofocus />
+        </div>
+        <div class="field">
+          <label>Contraseña</label>
+          <input type="password" name="password" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn full">Ingresar</button>
+      </form>
+      <a href="/" class="back-link">← Volver al catálogo público</a>
+    </div>
+  </div>
+</body>
+</html>
