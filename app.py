@@ -309,4 +309,3 @@ def catalogo_eliminar(request: Request, product_id: int):
     conn.commit()
     conn.close()
     return RedirectResponse('/catalogo', status_code=303)
-Listo

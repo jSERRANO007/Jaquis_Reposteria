@@ -32,4 +32,14 @@
         {% if o['notes'] %}<p>📝 {{ o['notes'] }}</p>{% endif %}
         <div class="ticket-actions">
           <form method="post" action="/estado/{{ o['id'] }}/En preparación"><button class="btn-estado prep">En preparación</button></form>
-          <form method="post" action="/estado/{
+          <form method="post" action="/estado/{{ o['id'] }}/Listo"><button class="btn-estado listo">Listo</button></form>
+          <form method="post" action="/estado/{{ o['id'] }}/Entregado"><button class="btn-estado entregado">Entregado</button></form>
+        </div>
+      </article>
+    {% else %}
+      <p class="empty">No hay pedidos registrados aún.</p>
+    {% endfor %}
+    </section>
+  </main>
+</body>
+</html>
