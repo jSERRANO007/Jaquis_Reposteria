@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Producto — JAQUIS</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">🍰 JAQUIS — Catálogo</div>
+    <nav>
+      <a href="/cocina">Cocina</a>
+      <a href="/reportes">Reportes</a>
+      <a href="/catalogo">Catálogo</a>
+      <a href="/logout" class="btn-logout">Salir</a>
+    </nav>
+  </header>
+  <main>
+    <div class="panel form-panel">
+      <h2>{{ 'Editar producto' if product else 'Nuevo producto' }}</h2>
+      <form method="post" action="{{ action }}">
+        <div class="form-grid">
+          <div class="field">
+            <label>Categoría</label>
+            <input type="text" name="category" value="{{ product['category'] if product else '' }}" placeholder="Ej: Queques" required />
+          </div>
+          <div class="field">
+            <label>Nombre del producto</label>
+            <input type="text" name="name" value="{{ product['name'] if product else '' }}" placeholder="Ej: Queque de chocolate" required />
+          </div>
+          <div class="field">
+            <label>Precio (₡)</label>
+            <input type="number" name="price" value="{{ product['price']|int if product else '' }}" placeholder="Ej: 1500" min="0" required />
+          </div>
+          <div class="field full">
+            <label>URL de la foto</label>
+            <input type="url" name="image" id="imgUrl" value="{{ product['image'] if product else '' }}" placeholder="https://..." required oninput="previewImg(this.value)" />
+          </div>
+          {% if product %}
+          <div class="field">
+            <label>Estado</label>
+            <select name="active">
+              <option value="1" {{ 'selected' if product['active'] else '' }}>Activo</option>
+              <option value="0" {{ 'selected' if not product['active'] else '' }}>Inactivo</option>
+            </select>
+          </div>
+          {% endif %}
+        </div>
+        <div class="preview-wrap">
+          <p style="color:var(--muted);margin-bottom:.5rem">Vista previa:</p>
+          <img id="imgPreview" src="{{ product['image'] if product else '' }}" alt="Preview" class="preview-img" onerror="this.style.display='none'" />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn">💾 Guardar</button>
+          <a href="/catalogo" class="btn secondary">Cancelar</a>
+        </div>
+      </form>
+    </div>
+  </main>
+  <script>
+    function previewImg(url) {
+      const img = document.getElementById('imgPreview');
+      img.src = url;
+      img.style.display = url ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
