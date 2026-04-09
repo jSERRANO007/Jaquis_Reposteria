@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="section-title">Pantalla operativa</h2>
+<section class="kitchen-grid">
+{% for o in orders %}
+  <article class="ticket status-{{ o['status']|lower|replace(' ', '-') }}">
+    <h3>Pedido #{{ o['id'] }}</h3>
+    <p><strong>{{ o['customer_name'] }}</strong> · {{ o['phone'] }}</p>
+    <p>{{ o['product_name'] }} x {{ o['quantity'] }}</p>
+    <p>Entrega: {{ o['delivery_date'] }} {{ o['delivery_time'] }}</p>
+    <p>Total: ₡{{ o['total']|int }}</p>
+    <p>Estado: {{ o['status'] }}</p>
+    <div class="ticket-actions">
+      <form method="post" action="/estado/{{ o['id'] }}/En preparación"><button>En preparación</button></form>
+      <form method="post" action="/estado/{{ o['id'] }}/Listo"><button>Listo</button></form>
+      <form method="post" action="/estado/{{ o['id'] }}/Entregado"><button>Entregado</button></form>
+    </div>
+  </article>
+{% endfor %}
+</section>
+{% endblock %}

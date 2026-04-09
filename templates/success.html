@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel center">
+  <h2>Pedido #{{ order_id }} registrado</h2>
+  <p>El pedido quedó guardado en la base de datos.</p>
+  <div class="actions">
+    <a class="btn" href="{{ wa_url }}" target="_blank">Abrir WhatsApp al 8814-0898</a>
+    <a class="btn secondary" href="/cocina">Ver pantalla de cocina</a>
+  </div>
+</section>
+{% endblock %}

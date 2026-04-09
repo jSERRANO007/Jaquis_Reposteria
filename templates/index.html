@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Repostería elegante, fácil de ordenar y lista para hoy</h1>
+    <p>Catálogo visual premium, pedidos rápidos y operación simple.</p>
+    <a class="btn" href="/pedido">Hacer pedido</a>
+  </div>
+</section>
+<section class="catalog">
+  {% for p in products %}
+  <article class="card">
+    <img src="{{ p.image }}" alt="{{ p.name }}" />
+    <div class="card-body">
+      <span class="tag">{{ p.category }}</span>
+      <h3>{{ p.name }}</h3>
+      <p>₡{{ p.price|int }}</p>
+    </div>
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}
