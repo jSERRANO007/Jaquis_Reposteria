@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo — JAQUIS</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">🍰 JAQUIS — Catálogo</div>
+    <nav>
+      <a href="/cocina">Cocina</a>
+      <a href="/reportes">Reportes</a>
+      <a href="/catalogo">Catálogo</a>
+      <a href="/logout" class="btn-logout">Salir</a>
+    </nav>
+  </header>
+  <main>
+    <div class="section-header">
+      <h2 class="section-title">Gestión de Productos</h2>
+      <a href="/catalogo/nuevo" class="btn">+ Nuevo producto</a>
+    </div>
+    <section class="cat-table-wrap">
+      <table class="cat-table">
+        <thead>
+          <tr><th>Foto</th><th>Categoría</th><th>Nombre</th><th>Precio</th><th>Estado</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+          {% for p in products %}
+          <tr class="{{ 'inactive' if not p['active'] else '' }}">
+            <td><img src="{{ p['image'] }}" alt="{{ p['name'] }}" class="thumb" /></td>
+            <td>{{ p['category'] }}</td>
+            <td>{{ p['name'] }}</td>
+            <td>₡{{ p['price']|int }}</td>
+            <td><span class="badge {{ 'active' if p['active'] else 'off' }}">{{ 'Activo' if p['active'] else 'Inactivo' }}</span></td>
+            <td class="actions-cell">
+              <a href="/catalogo/editar/{{ p['id'] }}" class="btn-sm">✏️ Editar</a>
+              <form method="post" action="/catalogo/eliminar/{{ p['id'] }}" style="display:inline" onsubmit="return confirm('¿Desactivar este producto?')">
+                <button class="btn-sm danger">🗑️ Desactivar</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--muted)">No hay productos. <a href="/catalogo/nuevo">Crear el primero</a></td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>
