@@ -1,22 +1,47 @@
-{% extends 'base.html' %}
-{% block content %}
-<h2 class="section-title">Reportes</h2>
-<section class="report-grid">
-  <div class="panel">
-    <h3>Producción por producto</h3>
-    <table><tr><th>Categoría</th><th>Producto</th><th>Unidades</th><th>Monto</th></tr>
-      {% for r in summary %}
-      <tr><td>{{ r['category'] }}</td><td>{{ r['product_name'] }}</td><td>{{ r['qty'] }}</td><td>₡{{ r['amount']|int }}</td></tr>
-      {% endfor %}
-    </table>
-  </div>
-  <div class="panel">
-    <h3>Pedidos por fecha de entrega</h3>
-    <table><tr><th>Fecha</th><th>Pedidos</th><th>Monto</th></tr>
-      {% for d in daily %}
-      <tr><td>{{ d['delivery_date'] }}</td><td>{{ d['orders_count'] }}</td><td>₡{{ d['total_amount']|int }}</td></tr>
-      {% endfor %}
-    </table>
-  </div>
-</section>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reportes — JAQUIS</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">🍰 JAQUIS — Reportes</div>
+    <nav>
+      <a href="/cocina">Cocina</a>
+      <a href="/reportes">Reportes</a>
+      <a href="/catalogo">Catálogo</a>
+      <a href="/logout" class="btn-logout">Salir</a>
+    </nav>
+  </header>
+  <main>
+    <h2 class="section-title">Reportes</h2>
+    <section class="report-grid">
+      <div class="panel">
+        <h3>Producción por producto</h3>
+        <table>
+          <tr><th>Categoría</th><th>Producto</th><th>Unidades</th><th>Monto</th></tr>
+          {% for r in summary %}
+          <tr><td>{{ r['category'] }}</td><td>{{ r['product_name'] }}</td><td>{{ r['qty'] }}</td><td>₡{{ r['amount']|int }}</td></tr>
+          {% else %}
+          <tr><td colspan="4" style="text-align:center;color:var(--muted)">Sin datos aún</td></tr>
+          {% endfor %}
+        </table>
+      </div>
+      <div class="panel">
+        <h3>Pedidos por fecha de entrega</h3>
+        <table>
+          <tr><th>Fecha</th><th>Pedidos</th><th>Monto</th></tr>
+          {% for d in daily %}
+          <tr><td>{{ d['delivery_date'] }}</td><td>{{ d['orders_count'] }}</td><td>₡{{ d['total_amount']|int }}</td></tr>
+          {% else %}
+          <tr><td colspan="3" style="text-align:center;color:var(--muted)">Sin datos aún</td></tr>
+          {% endfor %}
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
